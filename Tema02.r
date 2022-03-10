@@ -98,3 +98,10 @@ length(x)
 x<- runif(20) # DIstribucion uniforme en 0,1
 set.seed(1) # FIjar la semilla de la distribucion
 
+
+########################################################################
+
+# OPERACIONES ENTRE MATRICES
+
+
+
