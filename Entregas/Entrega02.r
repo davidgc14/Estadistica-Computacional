@@ -85,7 +85,8 @@ r <- eigen(A) # Valor de los autovalores y autovectores
 
 kapAprox <- abs(r$values[1] / r$values[length(r$values)])
 rcoAprox <- 1/kapAprox
-# Devuelve las aproximaciones de las funciones de kappa y rcond
+# Devuelve las aproximaciones de las funciones de kappa y rcond (la funcion predeterminada)
+# Aquí hemos forzado la solución exacta
 
 
 
