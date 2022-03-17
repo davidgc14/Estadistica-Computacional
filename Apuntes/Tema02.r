@@ -1,5 +1,6 @@
 ## VECTORES Y MATRICES
 
+runif(10) # Vector aleatorio distribución uniforme
 
 # Funcion concatenación
 v <- c(1,2,3,4,5)
