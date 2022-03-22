@@ -93,3 +93,6 @@ write(cars[1:3,], "cars2.txt") # devuelve error por no ser una matriz
 write(as.matrix(cars[1:3,]), "cars2.txt") # ahora si, pero por defecto la guarda traspuesta y en 5 columnas
 write(t(as.matrix(cars[1:3,])), "cars2.txt", ncolumns=2) # ahora si la exporta de manera correcta
 
+# Funcion unlink
+unlink('datos.txt') # Borra el fichero del directorio
+
