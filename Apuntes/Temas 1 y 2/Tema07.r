@@ -15,7 +15,7 @@ lapply(datos, class)
 str(datos)
 
 # Importa tratando a las columnas que no son para la primera columna, como tipo factor (para las que son de tipo caracter)
-datos <- read.table("datos.txt", header=TRUE, as.is(c(1))) 
+datos <- read.table("datos.txt", header=TRUE, as.is=c(1)) 
 
 # Importación de datos CSV
 datos <- read.table("datos.csv", header=TRUE, sep=",")
