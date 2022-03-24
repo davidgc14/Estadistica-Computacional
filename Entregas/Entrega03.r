@@ -31,6 +31,7 @@ lapply(lista, typeof)
 # Apartado f)
 M <- matrix(data = c(reg$residuals, reg$fitted.values, x, y),length(x), 4, dimnames = list(c('Residuals', 'Fitted Values', 'x', 'y')))
 # ERROR
+# habría que haber usado la función "cbind"
 
 
 
