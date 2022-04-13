@@ -551,3 +551,22 @@ by(Orange$age, Orange$Tree, summary)
 ############## DEPURADO Y DEBUG ###############
 ###############################################
 
+
+# Ruta de pasos hasta llegar a la salida por pantalla (al final del proceso)
+traceback()
+
+# Debugear desde terminal (incluirlo en medio del proceso)
+f <- function(x) {
+    browser() # permite modificar variables en el proceso. Q=quit,C=cut&continue
+    u <- runif(n)
+    return(u)
+}
+
+# Debugear sólo el código indicado
+debug(f)
+
+# Cortar el debugueo automático
+undebug(f)
+
+# Depurar solo una vez
+debugonce(f)
