@@ -245,6 +245,9 @@ datos[2:3,]
 # Acceder según una característica
 datos[datos$sexo=='Hombre',]
 
+# Se le pueden aplicar funciones de matrices
+rowSums(datos)
+
 
 
 ###############################################
@@ -396,6 +399,9 @@ t3 <- Sys.time()
 tiempof1 <- t2-t1
 tiempof2 <- t3-t2
 
+# Funciones predeterminadas. Unir cadenas de caracteres
+paste("Ma","no","lo",sep="-")
+
 
 
 ###############################################
@@ -403,3 +409,92 @@ tiempof2 <- t3-t2
 ###############################################
 
 
+# Bucle for con salida natural
+for(i in 1:10) {
+	print(i)
+}
+
+# Bucle for con salida por break
+for(i in 1:10) {
+	if(i==5) {
+		break
+	}
+	print(i) # esta sentencia no se llega a imprimir en la quinta
+}
+
+# Bucle for con salida por return
+for(i in 1:10) {
+	if(i==5) {
+		return(i)
+	}
+}
+
+# Bucle while (con vector de dimensión variable)
+set.seed(1)
+i <- suma <- 0
+x <- numeric() # vector de numeros de longitud variable. A priori 0
+while (suma < 1) {
+    i <- i + 1
+    x[i] <- runif(1, 0, 0.1) # uniforme en (0,0.1)
+    suma <- suma + x[i]
+}
+
+# Bucle repeat (de repeticiones infinitas) sin condición de salida
+repeat {
+	print(i)
+	if (i==10) {
+		break
+	}
+} 
+
+
+
+###############################################
+################# S-L-APPLY ###################
+###############################################
+
+
+# Lapply, longitud de cada componente de la lista
+lapply(lista, length)
+
+# Lapply, media por columnas de un data frame
+lapply(data.fr, mean)
+
+# Lapply, devuelve dos primeras filas de una lista
+lapply(lista, head, n=2)
+
+# Lapply, sumar cada uno de los elementos de la lista
+lapply(lista, sum)
+
+# Sapply: función lapply pero con salida simplificada
+sapply(lista, length)
+
+# Sapply, forzando la no simplificación
+sapply(lista, length, simplify=FALSE)
+
+# Apply, para cálculos de matrices. Mediana por columnas y filas
+apply(matriz, 2, median) # mediana por columnas
+apply(matriz, 1, median) # mediana por filas
+
+# Apply, cuasivarianza por columnas
+apply(matriz, 2, var)
+
+# Apply, raiz cuadrada de cada elemento
+apply(matriz, c(1,2), sqrt)
+
+
+
+###############################################
+######### AGRUPACIÓN Y CLASIFICACIÓN ##########
+###############################################
+
+
+# Clasificación de datos de un dataframe en función de un factor
+arboles <- split(Orange, Orange$Tree) # Devuelve una lista
+
+# Separar en factores los elementos de las diagonales de una matriz
+split(A,col(A)-row(A))
+split(A,col(A)+row(A)) # las diagonales contrarias
+
+# Clasificación por factores y características
+by(Orange$age, Orange$Tree, summary)
