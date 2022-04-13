@@ -34,7 +34,16 @@ x <- as.data.frame(x)
 
 # Ver si hay un valor perdido
 missing(x)
+
+# Impresión de texto por pantalla limpio
+cat('hola\n')
+
+# Impresión de mensaje de alerta
+warning('Considere cambiar la variable x')
  
+# Impresión de mensaje de error y parada del código
+stop('Error')
+
 
 
 ###############################################
@@ -405,6 +414,43 @@ paste("Ma","no","lo",sep="-")
 
 
 ###############################################
+############### CONDICIONANTES ################
+###############################################
+
+
+# If, condicionante simple con entrada de una variable
+if(x>0) {
+	x+1
+} else {
+	x-1
+}
+
+# Else if, condicionante anidado con entrada de una variable
+if(x>0) {
+	x+1
+} else if(x<0) {
+	x-1
+} else if(x==0) {
+	x
+}
+
+# Ifelse, condicionante anidado con entrada de varias variables (vectores)
+ifelse(x>0, x+1, x-1) # condición; respuesta para TRUE; respuesta para FALSE
+
+# Switch, escritura condicionante compacta de una variable
+switch( x, # variable a comparar
+		a = "opción 1", # if(x=="a")
+		b = "opción 2",
+		c = "opción 3",
+		stop("Valor de x no válido"))
+switch(x, 'uno','dos','tres','cuatro') # admite entrada numerica y comparar
+
+
+
+
+
+
+###############################################
 ################### BUCLES ####################
 ###############################################
 
@@ -498,3 +544,10 @@ split(A,col(A)+row(A)) # las diagonales contrarias
 
 # Clasificación por factores y características
 by(Orange$age, Orange$Tree, summary)
+
+
+
+###############################################
+############## DEPURADO Y DEBUG ###############
+###############################################
+
