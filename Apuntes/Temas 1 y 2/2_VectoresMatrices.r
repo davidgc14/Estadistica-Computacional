@@ -105,4 +105,57 @@ set.seed(1) # FIjar la semilla de la distribucion
 # OPERACIONES ENTRE MATRICES
 
 
+# Construcción de una matriz
+A <- matrix(1:10,nrow=2,ncol=5,byrow=TRUE) # El byrow es FALSE por defecto
+
+# Construcción de matrices por filas o columnas
+cbind(1:3,4:6,7:9)
+rbind(1:3,4:6,7:9)
+
+# Asignación de nombres a las columnas y a las filas
+rownames(A) <- c('fila.1','fila.2','fila.3')
+colnames(A) <- c('col.1','col.2','col.3')
+
+# Acceso a componentes de la matriz
+A[1:2,1:2] 
+A[,1] # Primera columna
+A[1,] # Primera fila
+ 
+# Eliminación de componentes de una matriz
+A[,-1] # Eliminar primera columna
+A[-1,] # Eliminar primera fila
+A[-1,-1] # Eliminar ambas
+
+# Formas alternativas de construcción de matriz
+x <- array(1:24,dim=c(3,4,2)) # Matriz tridimensional
+
+# Multiplicación elemento a elemento
+A*B
+
+# Multiplicación matricial
+A %*% B
+ 
+# Valores y vectores propios
+eigen(A)
+ 
+# Transpuesta
+t(A)
+ 
+# Inversa
+solve(A)
+chol2inv(chol(A)) # Inversa mediante Choleski
+ 
+# Resolución de sistema matricial
+solve(A,b)
+ 
+# Sumas por filas/columnas, medias por filas/columnas
+rowSums(A)
+colMeans(A)
+
+# Producto interior
+outer(A,B,*) # A %o% B
+
+# Ordenación de columnas determinadas
+A[order(A[,1]),] #primera columna
+
 

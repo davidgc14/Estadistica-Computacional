@@ -75,3 +75,11 @@ boxplot(mtcars2$mpg, mtcars2$vs) # misma gráfica
 
 # OTRAS FUNCIONES
 # MERGE, MATCH, ...
+
+
+# CONVERSION DE DATOS
+
+is.matrix(mtcars)
+is.data.frame(mtcars)
+
+M <- as.matrix(mtcars) # Convertir a matriz
