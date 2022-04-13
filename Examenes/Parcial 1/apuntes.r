@@ -31,6 +31,9 @@ is.list(x)
 x <- as.factor(x)
 x <- as.matrix(x,2,2) # dimesiones de la matriz
 x <- as.data.frame(x)
+
+# Ver si hay un valor perdido
+missing(x)
  
 
 
@@ -364,6 +367,39 @@ f1 <- function(a=0,b=0) {
 	a + b
 }
 
+# Se aplica la regla de reciclaje en caso de entrada de vector
+f1(1:10,2)
 
+# devuelve última instancia a menos que se retorne
+f2 <- function(x) {
+	return(x+2)
+	24
+}
+
+# devolución de más de un resultado: en forma de lista
+f3 <- function(x) {
+	return(list(x+2, x+3))
+}
+
+# Asignación de nombres a las variables de salida
+f4 <- function(x,y) {
+	return(list(suma=x+y, resta=x-y))
+}
+
+# Control de eficiencia
+t1 <- Sys.time()
+fun.1(10000)
+t2 <- Sys.time()
+fun.2(10000)
+t3 <- Sys.time()
+
+tiempof1 <- t2-t1
+tiempof2 <- t3-t2
+
+
+
+###############################################
+################### BUCLES ####################
+###############################################
 
 
