@@ -30,6 +30,7 @@ sort(x)[-c(1:long)]
 A <- matrix(c(x,abs(x-mx)), ncol=2)
 
 
+
 ###################################
 ######### Ejercicio 2 #############
 ###################################
@@ -57,3 +58,87 @@ hatco$cliente <- as.character(hatco$cliente)
 
 
 # 2.4
+
+hatco.clasificado <- split(hatco, hatco$x8)
+longitud.peq <- length(hatco.clasificado$pequeña$x8)
+longitud.grande <- length(hatco.clasificado$grande$x8)
+
+hatco.clasificado$pequeña[sample(1:longitud.peq,1),]
+hatco.clasificado$grande[sample(1:longitud.grande,1),]
+
+
+# 2.5
+
+fidelidad.mx <- mean(hatco$y)
+fidelidad.mx.peq <- mean(hatco.clasificado$pequeña$y)
+fidelidad.mx.grande <- mean(hatco.clasificado$grande$y)
+
+
+# 2.6
+
+sum(hatco.clasificado$pequeña$y > fidelidad.mx.peq)
+sum(hatco.clasificado$grande$y > fidelidad.mx.grande)
+
+
+# 2.7
+
+# scale(hatco, scale=FALSE)
+
+
+
+###################################
+######### Ejercicio 3 #############
+###################################
+
+
+# 3.1
+
+#sin recursividad
+prog.aritm <- function(a1, n=1, d) {
+    
+    # Control de errores
+    if(!is.numeric(n) || !is.numeric(d) || !is.numeric(a1)){
+        stop("Revise que los valores entrantes sean numéricos")
+    }else if (n < 2) {
+       warning("El valor de n es inferior a 2, 
+                no se calculará ninguna iteración.")
+       return(list(a1, a1, a1))
+    }
+    
+    vector <- numeric(n)
+    vector[1] <- a1
+
+    for (i in 2:n) {
+        vector[i] <- vector[i-1] + d
+        # vector[i] <- a1 + d*i
+    }
+
+    return(list(vector, sum(vector), prod(vector)))
+}
+
+
+# prog.aritm.R <- function(a1, n=1, d) {
+
+#     # Control de errores
+#     if(!is.numeric(n) || !is.numeric(d) || !is.numeric(a1)){
+#         stop("Revise que los valores entrantes sean numéricos")
+#     }
+
+#     vector <- numeric(n)
+#     vector[1] <- a1
+    
+#     if (n < 2) {
+#        return(list(vector, sum(vector), prod(vector)))
+#     } else {
+#         return(prog.aritm.R(a1,n-1,d))
+#     }
+    
+
+#     for (i in 2:n) {
+#         vector[i] <- vector[i-1] + d
+#         # vector[i] <- a1 + d*i
+#     }
+
+#     return(list(vector, sum(vector), prod(vector)))
+# }
+
