@@ -37,4 +37,23 @@ A <- matrix(c(x,abs(x-mx)), ncol=2)
 
 # 2.1
 
-hatco <- read.table("hatco.txt", header = TRUE, sep="\t")
+hatco <- read.table("hatco.txt", header = TRUE)
+
+
+# 2.2
+
+hatco <- within(hatco,{
+    x8 <- factor(x8, labels=c("pequeña", "grande"))
+})
+
+
+# 2.3
+
+hatco <- within(hatco,{
+    cliente <- as.character(hatco$cliente)
+})
+# Así mejor
+hatco$cliente <- as.character(hatco$cliente)
+
+
+# 2.4
