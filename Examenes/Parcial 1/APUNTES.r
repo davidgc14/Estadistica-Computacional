@@ -411,6 +411,9 @@ tiempof2 <- t3-t2
 # Funciones predeterminadas. Unir cadenas de caracteres
 paste("Ma","no","lo",sep="-")
 
+# Función gamma (integrales y factoriales)
+gamma(20)
+
 
 
 ###############################################
