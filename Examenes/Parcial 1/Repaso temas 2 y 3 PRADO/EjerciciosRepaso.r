@@ -142,3 +142,35 @@ prog.aritm <- function(a1, n=1, d) {
 #     return(list(vector, sum(vector), prod(vector)))
 # }
 
+
+prog.aritm2 <- function(a1, n=1, d, explicit=FALSE) {
+    
+    # Control de errores
+    if(!is.numeric(n) || !is.numeric(d) || !is.numeric(a1)){
+        stop("Revise que los valores entrantes sean numéricos")
+    }else if (n < 2) {
+       warning("El valor de n es inferior a 2, 
+                no se calculará ninguna iteración.")
+       return(list(a1, a1, a1))
+    } else if (d == 0) {
+        warning("El valor de d es 0,
+                se tendrá una sucesión constante")
+        return(list(rep(a1,times=n), n*a1, a1^n))
+    }
+    
+    vector <- numeric(n)
+    vector[1] <- a1
+
+    for (i in 2:n) {
+        vector[i] <- vector[i-1] + d
+        # vector[i] <- a1 + d*i
+    }
+
+    if (explicit) {
+        sum <- n * (vector[1] + vector[n]) * 0.5
+        prod <- (d^n) * (gamma(n + vector[1]/d) / gamma(vector[1]/d))
+        return(list(vector, sum, prod))
+    } else{
+        return(list(vector, sum(vector), prod(vector)))
+    }
+}
