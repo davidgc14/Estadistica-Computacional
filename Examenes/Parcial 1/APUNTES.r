@@ -202,6 +202,7 @@ outer(A,B,*) # A %o% B
 
 # Ordenación de columnas determinadas
 A[order(A[,1]),] #primera columna
+A[1,order(names(A))] # ordenar por nombres
 
 # Número de condición de una matriz en un sistema
 1/kappa(A) # Aproximación
@@ -353,6 +354,9 @@ class(datos)
 typeof(datos)
 lapply(datos, class)
 str(datos)
+
+# Otra forma de resumen de información
+aggregate(datos, by=list(datos$sexo), FUN=summary)
 
 # Acceso a variables del archivo importado
 mean(datos$salario)
