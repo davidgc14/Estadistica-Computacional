@@ -118,6 +118,9 @@ cumsum(v)
 # Distribución uniforme en (0,1)
 runif(20)
 
+# Distribución uniforme en (a,b)
+runif(20, a, b)
+
 # Distribución normal
 rnorm(20)
 
