@@ -145,6 +145,9 @@ unclass(ej.f)
 
 # Valores aleatorios
 sample(1:5,2,replace=FALSE) # dos valores sin repetición
+
+# impresión de graficos
+plot(1:10,v)
  
 
 
