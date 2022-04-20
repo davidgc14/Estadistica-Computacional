@@ -375,7 +375,7 @@ v <- scan()
 write.table(cars[1:3,], file="cars.txt")
 write.table(cars[1:3,], file="cars.txt", col.names=FALSE) # Sin encabezado
 
-# Exportar vector o matriz
+# Exportar vector o matriz (imprimir)
 write(runif(10), "runif.txt")
 write(runif(10), "runif.txt", ncolumns=2) # en dos columnas
 
