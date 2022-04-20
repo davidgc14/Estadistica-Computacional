@@ -588,3 +588,14 @@ undebug(f)
 
 # Depurar solo una vez
 debugonce(f)
+
+
+
+###############################################
+############## REGRESIÓN LINEAL ###############
+###############################################
+
+
+# Función predefinida que proporciona toda la información de una regresión lineal
+reg <- lm(x ~ y) # objeto tipo lista
+summary(reg)
