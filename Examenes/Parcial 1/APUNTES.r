@@ -281,6 +281,9 @@ head(mtcars)
 # Mostrar últimas 6 filas
 tail(mtcars)
 
+# Mostrar las primeras 3 filas
+head(mtcars,3)
+
 # Obtener un subgrupo según condiciones
 subset(mtcars,subset= vs==0 & hp>90) # subset de todo el dataframe
 subset(mtcars,subset= vs==0 & hp>90, select=c(1:2)) # seleccionar las dos columnas primeras
