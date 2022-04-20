@@ -429,6 +429,8 @@ gamma(20)
 ###############################################
 
 
+x <- 4
+
 # If, condicionante simple con entrada de una variable
 if(x>0) {
 	x+1
@@ -497,11 +499,13 @@ while (suma < 1) {
 }
 
 # Bucle repeat (de repeticiones infinitas) sin condición de salida
+i = 0
 repeat {
 	print(i)
 	if (i==10) {
 		break
 	}
+	i <- i + 1
 } 
 
 
