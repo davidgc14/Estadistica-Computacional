@@ -173,6 +173,9 @@ A*B
 
 # Multiplicación matricial
 A %*% B
+
+# Traspuesta de una matriz
+t(A)
  
 # Valores y vectores propios
 eigen(A)
@@ -196,6 +199,11 @@ outer(A,B,*) # A %o% B
 
 # Ordenación de columnas determinadas
 A[order(A[,1]),] #primera columna
+
+# Número de condición de una matriz en un sistema
+1/kappa(A) # Aproximación
+rcond(A) # Exacto, también -- 1/kappa(A, exact=TRUE) # Exacto
+# mientras más proximo a cero, más singular
 
 
 
