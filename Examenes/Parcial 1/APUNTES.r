@@ -124,6 +124,12 @@ runif(20, a, b)
 # Distribución normal
 rnorm(20)
 
+# Mediana
+median(1:10)
+
+# Cuantiles, Cuartiles
+quantile(1:10, probs=c(0.25, 0.5, 0.75))
+
 # Fijar la semilla de la distribución (para trabajar siempre con la misma
 set.seed(1)
 
