@@ -269,6 +269,8 @@ datos[datos$sexo=='Hombre',]
 # Se le pueden aplicar funciones de matrices
 rowSums(datos)
 
+# Contar cuantos datos perdidos hay
+lapply(lapply(datos, is.na), sum)
 
 
 ###############################################
