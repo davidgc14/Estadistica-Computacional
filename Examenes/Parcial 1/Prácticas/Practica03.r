@@ -30,3 +30,22 @@ reg<-lm(y~x)
 class(reg)
 typeof(reg)
 summary(reg) # información del modelo de regresión
+
+
+# 1.5
+
+M <- cbind(x, y, reg$residuals, reg$fitted.values)
+colnames(M) <- c("x", "y", "residuals", "fitted values")
+
+
+
+
+
+#############################
+#######  Ejercicio 2  #######
+#############################
+
+
+# 2.4
+# Tipifación
+transform(M, M$residuals2 = M$residuals*100)
