@@ -18,7 +18,7 @@ cantidad <- sum(dx(x)) # también se puede hacer sin la función
 
 
 # 1.3
-x[]
+x <- x[-(abs(x - mx) > sx)] # no se hace así. No he podido pensarlo bien
 
 
 # 1.4
@@ -43,7 +43,7 @@ lapply(lapply(aire, is.na), sum)
 
 # 2.3
 sum(sapply(lapply(aire, is.na), sum)) # cantidad a eliminar
-
+# falta eliminar las filas. Lo he dejado para el final y no he tenido tiempo
 
 # 2.4
 aire$Month <- factor(aire$Month, labels=c("May", "Jun", "Jul", "Aug", "Sep"))
@@ -68,7 +68,7 @@ aire.mayo <- subset(aire, Month == "May")
 ###############################
 
 # función para calcular los n primeros términos de una sucesión
-proggeo <- function(a1, n, r) {
+proggeo <- function(a1, n=1, r) {
         if (missing(a1)||!is.numeric(a1)) { 
         stop("Debe proporcionar un argumento 'a1' numérico")
     } else if (missing(r)||!is.numeric(r)) { 
@@ -105,3 +105,8 @@ proggeo <- function(a1, n, r) {
 
     return(list(vector = v, suma1 = suma1, suma2 = suma2, prod1 = prod1, prod2 = prod2))
 }
+
+
+# Pruebas
+proggeo(2,20,-0.5)
+proggeo(2,20,0.5)
