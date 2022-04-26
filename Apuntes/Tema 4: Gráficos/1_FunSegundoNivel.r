@@ -84,3 +84,22 @@ abline(h = 0, lty = 3)
 # añadimos valor del centro
 points(pi, 0, pch = 17, col = 4)
 text(pi, 0, expression(group("(",list(pi,0),")")), adj = c(0,0))
+
+
+# OTRO EJEMPLO
+
+radio <- seq(0, 5, by=0.1)
+area <- pi*radio^2
+perimetro <- 2*pi*radio
+plot(radio, area, type='o', ylab='', pch=19, col=2)
+lines(radio, perimetro, type='o', pch=17, col=4)
+legend('topleft', legend = c('Área','Perímetro'), # TOPLEFT es una de las palabras reservadas para la leyenda
+        lty = 1, pch = c(19,17), col = c(2,4), bt='n') # bt indicamos que no queremos caja de la leyenda
+
+# PROBAR INTERACTIVO DONDE PONER LA LEYENDA
+legend(locator(1), legend = c('Área','Perímetro'), # locator permite interactuar con el grafico e indicar donde poner la leyenda
+        lty = 1, pch = c(19,17), col = c(2,4), bt='n') 
+
+
+# EJERCICIO
+# Poner leyenda al grafico de las normales
