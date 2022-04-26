@@ -64,14 +64,31 @@ curve(dnorm(x, mean=10, sd=2), 4, 16, ylab="Densidad",
 
 # superposición de funciones
 curve(x^2, -1, 1)
-curve(x^4, col=2, add=TRUE) # col=2 es el color de la linea. No es necesario indicar el intervalo cuando se va a superponer
+curve(x^4, col=2, add=TRUE) 
+# col=2 es el color de la linea. No es necesario indicar el intervalo cuando se va a superponer
 
 
 # EJERCICIO
-curve(dnorm(x, mean=0, sd=0.5), -8, 8, ylab="Densidad",
+curve(dnorm(x, mean=0, sd=0.5), -4, 6, ylim=c(0,0.8), ylab="Densidad",
             main="Distribución 1")
 curve(dnorm(x, mean=0, sd=1),
             main="Distribución 2", col=2, add=TRUE)
 curve(dnorm(x, mean=3, sd=1),
             main="Distribución 3", col=3, add=TRUE)
+# ylim establece los limites superiores e inferiores
 
+
+
+##############################
+######### SYMBOLS ############
+##############################
+
+# impresión de símbolos, cuadrados, estrellas...
+
+n <- 10
+set.seed(1)
+x <- runif(n)
+colores <- rainbow(n)
+symbols(1:n, x, circles=x, bg=colores, ylim=c(0,1.5), xlim=c(0,11))
+# la posición del circulo viene dado por el valor de x
+# el radio del circulo tambien viene dado por el valor de x
