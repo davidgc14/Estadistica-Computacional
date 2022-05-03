@@ -103,3 +103,35 @@ legend(locator(1), legend = c('Área','Perímetro'), # locator permite interactu
 
 # EJERCICIO
 # Poner leyenda al grafico de las normales
+
+##############################
+##### COSAS QUE AÑADIR #######
+##############################
+
+polygon
+segments
+arrows
+grid
+title
+axis
+
+
+##############################
+######## PARÁMETROS ##########
+##############################
+
+# Multigráfica
+
+par(mfrow = c(2, 2)) # matriz de 2x2 gráficos (se rellenan por filas)
+curve(dnorm(x), -3, 3, main = 'Gráfico 1: Normal estándar')
+curve(dt(x, df=10), -3, 3, main = 'Gráfico 2: t de Student')
+curve(dchisq(x, df=5), 0, 20, main = 'Gráfico 3: chi-cuadrado')
+curve(df(x, df1=20, df2=10), 0, 5, main = 'Gráfico 4: F de Snedecor')
+
+# Otro ejemplo
+
+par(mar=c(3.5,3.5,2.5,1.5),oma=c(1,1,1,1),mgp=c(1.5,0.5,0), cex.axis=0.8,cex.lab=0.8,cex.main=1,col.lab='blue',bty='n')
+curve(dnorm(x), -3, 3, main = 'Gráfico 1: Normal estándar')
+curve(dt(x, df=10), -3, 3, main = 'Gráfico 2: t de Student')
+curve(dchisq(x, df=5), 0, 20, main = 'Gráfico 3: chi-cuadrado')
+curve(df(x, df1=20, df2=10), 0, 5, main = 'Gráfico 4: F de Snedecor')
