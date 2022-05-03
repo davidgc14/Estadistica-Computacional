@@ -36,3 +36,17 @@ pred.p <- predict(fit, newdata=x0, interval='prediction', se.fit=T)
 matplot(x0$bp, cbind(pred.m$fit, pred.p$fit[, -1]), lty=c(1, 2, 2, 3, 3), col=c(1, 2, 2, 4, 4), type='l', xlab='temperatura', ylab='presión', main='')
 legend('topleft', c('Media', 'Predicción'),  lty=c(2, 3), col=c(2, 4), bt='n')
 points(forbes$bp, forbes$pres)
+
+
+
+################################
+##### VARIANZA DE UNA VIA ######
+################################
+
+# Ratas en 4 dietas
+
+library(faraway)
+data(coagulation)
+boxplot(coag~diet, data=coagulation)
+
+lm(coag~diet, data=coagulation)
