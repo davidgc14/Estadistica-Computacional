@@ -37,3 +37,6 @@ spin('script_prueba.r')
 
 # Abrir en buscador
 browseURL(url=spin('script_prueba.r'))
+
+
+# Documento latex codificado para R con extension .Rnw
