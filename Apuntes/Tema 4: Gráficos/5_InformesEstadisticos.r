@@ -2,6 +2,7 @@
 # (desde RStudio)
 
 library(rmarkdown)
+library(knitr)
 
 render("prueba.Rmd")
 
@@ -11,7 +12,7 @@ render("prueba.Rmd")
 render("prueba.Rmd", clean = FALSE) # no es necesario
 
 # Para abrir el documento html en el buscador
-browseURL(url=render('ejemplo1.Rmd'))
+browseURL(url=render('prueba.Rmd'))
 
 # Las ediciones en el documento se actualizan sobre la marcha en el
 # documento preview
@@ -22,3 +23,17 @@ browseURL(url=render('ejemplo1.Rmd'))
 
 # Empezar con ``` es equivalente a $$
 # Si usamos uno solo es equivalente a $ 
+
+
+# Convertir de Rmd a R
+purl('prueba.Rmd', 'script_prueba.r')
+
+# Convertir a script incluyendo cometarios
+purl('prueba.Rmd', 'script_prueba.r', documentation = TRUE)
+
+
+# Convertir de R a html y md
+spin('script_prueba.r')
+
+# Abrir en buscador
+browseURL(url=spin('script_prueba.r'))

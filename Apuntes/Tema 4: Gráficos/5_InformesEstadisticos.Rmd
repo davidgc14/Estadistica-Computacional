@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Puebas
+## Gráfica
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
@@ -20,3 +20,9 @@ La media de la velocidad es `r mean(cars$speed)`
 ```{r tabla}
 library(knitr)
 ```
+
+## Fórmula matemática
+
+\[
+    \bar x = \sum_{i=1}^{n} x_i / n
+\]
