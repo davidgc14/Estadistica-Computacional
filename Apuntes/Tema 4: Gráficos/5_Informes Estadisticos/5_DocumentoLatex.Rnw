@@ -2,6 +2,7 @@
 
 \begin{document}
     Aqui hay un chunk
+    <<foo, fig.height=4>>
 
-
+    
 \end{document}
