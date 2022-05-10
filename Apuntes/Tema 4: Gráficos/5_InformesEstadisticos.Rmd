@@ -1,0 +1,22 @@
+---
+title: "prueba"
+author: "Curbelo"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Puebas
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+La media de la velocidad es `r mean(cars$speed)`
+
+```{r tabla}
+library(knitr)
+```
