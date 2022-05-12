@@ -2,11 +2,13 @@
 title: "Entrega 9"
 author: "Curbelo"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+    html_document:
+        toc: TRUE
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+    knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
@@ -16,11 +18,11 @@ knitr::opts_chunk$set(echo = TRUE)
 Importamos guardando los caracteres como factores.
 
 ```{r , include=FALSE}
-hatco <- read.csv("hatco2.csv", header=TRUE, as.is=NA)
+    hatco <- read.csv("hatco2.csv", header=TRUE, as.is=NA)
 
-within(hatco, {
-    hatco$empresa <- factor(hatco$empresa)
-})
+    within(hatco, {
+        hatco$empresa <- factor(hatco$empresa)
+    })
 ```
 ```{r }
     str(hatco)
@@ -32,7 +34,7 @@ within(hatco, {
 Observamos la posible relación entre las variables.
 
 ```{r }
-plot(hatco[,c(6:13)])
+    plot(hatco[,c(6:13)])
 ```
 
 Vemos que algunas de las variables están relacionadas de manera lineal,
@@ -41,15 +43,15 @@ pero no todas tienen relación entre sí.
 Ajustamos el modelo de regresión lineal múltiple:
 
 ```{r }
-mod1<-lm(fidelidad~
-    velocidad + precio + flexprec + imgfabri + servconj + imgfvent + calidadp,
-    hatco)
+    mod1<-lm(fidelidad~
+        velocidad + precio + flexprec + imgfabri + servconj + imgfvent + calidadp,
+        hatco)
 ```
 
 Los valores estimados se obtienen de los coeficientes anteriores:
 
 ```{r }
-summary(mod1) #' tambien se pueden ver aquí o simplemente con mod1
+    summary(mod1) #' tambien se pueden ver aquí o simplemente con mod1
 ```
 
 Donde la variable estimada ofrece una estimación de la fideidad de un producto
@@ -60,7 +62,7 @@ Tambien podemos observar el valor de R², que nos indica la relación entre
 la variable fiabilidad y las variables que construyen el modelo (explicativas). Es explicado en un 77%
 
 ```{r }
-anova(mod1) 
+    anova(mod1) 
 ```
 
 
@@ -86,7 +88,7 @@ son significativas, salvo tindustr (con p-valor 0.13 > 0.05)
 Veamos si podemos prescindir del término constante
 
 ```{r }
-summary(mod1)
+    summary(mod1)
 ```
 
 Vemos que el p-valor del término constante es 0.044 < 0.05, luego no se rechaza a este nivel de significación
