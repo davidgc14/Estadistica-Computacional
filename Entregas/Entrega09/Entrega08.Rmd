@@ -89,7 +89,79 @@ Veamos si podemos prescindir del término constante
 ```
 
 Vemos que el p-valor del término constante es 0.044 < 0.05, luego no se rechaza a este nivel de significación
-Si el nivel de significación fuera 0.01, sí se rechazaría el término constante
+Si el nivel de significación fuera 0.01, sí se rechazaría el término constante.
 
-Faltan los ejercicios del 5 en adelante. 
-Eliminados para poder hacer la práctica 9, debido a fallos de compilación.
+```{r }
+    summary(mod2)
+```
+Sin embargo vemos que para el segundo podelo, el p-valor vale < 10^(-16) < 0.01, luego 
+no se puede prescindir del término constante ni al nivel de significación 0.05, y tampoco al 0.01.
+
+
+## Diagnósticos del modelo
+
+**Homocedasticidad**
+
+```{r }
+    residuos1.estandarizados  <- rstandard(mod1) # residuos estandarizados
+    plot(mod1$fitted.values, residuos1.estandarizados)
+
+```
+
+**Incorrelación**
+
+Importamos el paquete *lmtest* para proceder al cálculo de la posible incorrelación entre variables.
+
+```{r }
+    # pendiente debido a error en la importacion
+    # library(lmtest)
+    # dwtest(mod1)
+```
+
+
+**Normalización**
+
+```{r }
+    ks.test(residuos1.estandarizados, pnorm)
+    qqnorm(residuos1.estandarizados)
+    qqline(residuos1.estandarizados)
+```
+
+
+**Linealidad**
+
+```{r }
+    # pendiente debido a error en la importacion
+    # library("car")
+    # crPlots(mod1)
+```
+## Anomalías
+
+**Datos anómalos**
+```{r }
+    summary(mod2)
+```
+sum(abs(residuos1.estandarizados) > 2.5)
+**2 Empresas anómalas**
+```{r }
+    hatco[abs(residuos1.estandarizados) > 2.5, ]
+```
+
+**datos influyentes**
+```{r }
+    cooks.distance(mod1) # leverage, aislamiento
+    plot(cooks.distance(mod1))
+    which(cooks.distance(mod1) > 0.1)
+```
+
+```{r }
+    hatvalues(mod1)
+    plot(hatvalues(mod1))
+    indices <- which(hatvalues(mod1) > 0.25)
+    hatco[indices, ]
+```
+
+
+```{r }
+    # influenceIndexPlot(mod1)
+```
