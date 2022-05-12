@@ -18,12 +18,9 @@ output:
 Importamos guardando los caracteres como factores.
 
 ```{r , include=FALSE}
-    hatco <- read.csv("hatco2.csv", header=TRUE, as.is=NA)
-
-    within(hatco, {
-        hatco$empresa <- factor(hatco$empresa)
-    })
+    hatco <- read.csv("hatco2.csv", header=TRUE, stringsAsFactors=TRUE)
 ```
+
 ```{r }
     str(hatco)
 ```
