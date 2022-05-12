@@ -40,7 +40,7 @@ Observamos la posible relación entre las variables.
 Vemos que algunas de las variables están relacionadas de manera lineal,
 pero no todas tienen relación entre sí.
 
-Ajustamos el modelo de regresión lineal múltiple:
+Ajustamos el modelo de *regresión lineal múltiple*:
 
 ```{r }
     mod1<-lm(fidelidad~
@@ -54,9 +54,9 @@ Los valores estimados se obtienen de los coeficientes anteriores:
     summary(mod1) #' tambien se pueden ver aquí o simplemente con mod1
 ```
 
-Donde la variable estimada ofrece una estimación de la fideidad de un producto
+Donde la variable estimada ofrece una estimación de la fidelidad de un producto
 en la útlima linea del summary aparece el valor de la p-valor, que nos indica
-que el modelo es significativo.
+que **el modelo es significativo**.
 
 Tambien podemos observar el valor de R², que nos indica la relación entre
 la variable fiabilidad y las variables que construyen el modelo (explicativas). Es explicado en un 77%
