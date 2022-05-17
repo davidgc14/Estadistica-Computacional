@@ -48,3 +48,20 @@ pnorm(2, lower.tail=FALSE)
 
 # error
 qnorm(0.025,lower.tail=FALSE)*sd(cx)/sqrt(nsim)
+
+
+
+# Técnica de muestreo por importancia
+nsim <- 1000
+set.seed(1)
+z <- rexp(nsim)+4.5
+w <- dnorm(z)/dexp(z-4.5)
+
+# aproximación:
+mean(w)
+
+# Valor teórico
+pnorm(4.5, lower.tail=FALSE)
+
+# error
+qnorm(0.025,lower.tail=FALSE)*sd(w)/sqrt(nsim)
