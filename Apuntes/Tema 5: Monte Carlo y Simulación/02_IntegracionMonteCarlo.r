@@ -32,3 +32,19 @@ abline(h=4/5,col=2)
 #### INTEGRAL INDEFINIDA ####
 #############################
 
+
+# Aproximación con una normal (0,1)
+
+nsim <- 1000
+x <- rnorm(nsim)
+cc <- function(x) (x>2)
+cx <- cc(x)
+
+# Aproximación 
+mean(cx)
+
+# Valor teórico
+pnorm(2, lower.tail=FALSE)
+
+# error
+qnorm(0.025,lower.tail=FALSE)*sd(cx)/sqrt(nsim)
