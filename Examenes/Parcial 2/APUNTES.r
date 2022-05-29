@@ -276,3 +276,36 @@ points(forbes)
 plot(forbes) # Imprimimos el data frame de dos columnas
 mod <- lm(pres ~ bp)
 abline(mod, col = 'red') # pintamos la recta de regresión
+
+
+
+###############################################
+####### ANÁLISIS DE LA VAR. DE UNA VÍA ########
+###############################################
+
+library(faraway); attach(coagulation)
+
+# Impresión de gráficos de dispersión
+boxplot(coag ~ diet)
+
+# Ajuste del modelo
+fit <- lm(coag ~ diet) # data = coagulation) En caso de no estar attached
+# Devuelve la media y los valores que hay que sumarle a la media
+
+# Otra forma de obtenerlos directamente
+fit <- lm(coag ~ diet-1) 
+
+# Se plantea el contr. de hip. suponiendo que todas las medias son iguales
+anova(fit) # si el p < 0.05, la dieta SI tiene efecto, las medias son distintas
+
+# Formula alternativa a lm para ajustar el ANOVA
+fit2 <- aov(coag ~ diet)
+summary(fit2)
+
+# Comparación por parejas de factores
+pairwise.t.test(coag,diet) # a menor valor, más diferencia
+
+# Comparación múltiple de Tukey
+TukeyHSD(aov(coag~diet)) # útlima columna es el dato anterior mejorado (p-valor)
+
+
