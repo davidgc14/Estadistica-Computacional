@@ -173,5 +173,55 @@ boxplot(rnorm(100)) # Los puntos exteriores son datos anomalos
 # Superposición en el histograma
 hist(rnorm(1000))
 
-par(new=TRUE) # Para que no se superponga la siguiente
+par(new = TRUE) # Para que se superponga la siguiente
 boxplot(rnorm(1000), horizontal = TRUE, axes = FALSE)
+
+# Comparativa entre dos variables continuas
+boxplot(rnorm(1000), rnorm(1000, mean = 3, sd = 5))
+
+# Comparativa entre elementos de factores en una variable
+boxplot(salary~gender) # Factores: género. Conjunto de datos: Salary
+
+# Distinción con dos factores
+boxplot(salary~gender*jobcat)
+
+
+
+# Regresión lineal
+plot(salary, startsal)
+mod <- lm(salary~startsal)
+abline(mod)
+
+
+###############################################
+############ VAR. CUALITATIVAS ################
+###############################################
+
+# Valores aleatorios en variable tipo factor
+aleatorios <- sample(1:5,100, replace = TRUE)
+factor <- factor(aleatorios)
+
+# Clasificación de valores
+tabla <- table(factor)
+
+# Frecuencia de la clasificación de valores
+fi <- prop.table(tabla)
+
+# COnstrucción de tablade frecuencias
+data.frame(tabla, Freq.rel = as.numeric(fi))
+
+# Diagrama de barras
+barplot(tabla)
+
+# Diagrama de sectores
+pie(tabla)
+
+# Diagrama de barras apilado
+paridad <- factor(aleatorios%%2)
+tab <- table(factor, paridad)
+addmargins(tab) # Añadir sumas acumuladas a una tabla
+
+barplot(tab)
+
+# Diagrama de barras de dos factores uno al lado del otro
+barplot(tab, beside = TRUE)
