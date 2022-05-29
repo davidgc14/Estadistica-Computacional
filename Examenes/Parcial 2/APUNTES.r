@@ -187,12 +187,6 @@ boxplot(salary~gender*jobcat)
 
 
 
-# Regresión lineal
-plot(salary, startsal)
-mod <- lm(salary~startsal)
-abline(mod)
-
-
 ###############################################
 ############ VAR. CUALITATIVAS ################
 ###############################################
@@ -225,3 +219,60 @@ barplot(tab)
 
 # Diagrama de barras de dos factores uno al lado del otro
 barplot(tab, beside = TRUE)
+
+
+
+###############################################
+############# REGRESIÓN LINEAL ################
+###############################################
+
+library(MASS); attach(forbes)
+
+# Función lm
+fit <- lm(pres ~ bp)
+
+# Nombres de variables que calcula la función lm (lista)
+names(fit) 
+
+# Bondad del ajuste (COEFICIENTE DE DETERMINACIÓN)
+summary(fit) # Debemos mirar el multiple R-squared
+# si el p-valor es menor que 0.05, es bueno
+
+# Cálculos intermedios del contraste de regresión
+anova(fit)
+
+# Intervalos de confianza al 95%
+confint(fit) # level = 0.90
+
+# Impresión de la recta de regresión sobre la nube de puntos
+abline(fit)
+
+# Predicción sobre un valor de entrada e intervalo máximo de error
+predict(fit, newdata = data.frame(bp = 200), interval = "prediction")
+
+# Predicción sobre un valor de entrada e intervalo de confianza 95%
+predict(fit, newdata = data.frame(bp = 200), interval = "confidence") # level = 0.99)
+
+# Mayor detalle (errores, ...)
+predict(fit, newdata = data.frame(bp = 200), se.fit=TRUE)
+
+# Pintado de intervalos de rpedicción y confianza
+x <- data.frame(bp = seq(min(forbes$bp), max(forbes$bp), length.out = 20))
+pred.m <- predict(fit, newdata = x, interval = 'confidence', se.fit = TRUE) # Vector de precicciones e intervalos
+pred.p <- predict(fit, newdata = x, interval = 'prediction', se.fit = TRUE)
+matplot(x$bp,   cbind(pred.m$fit, pred.p$fit[,-1]), 
+                lty=c(1,2,2,3,3), 
+                col=c(1,2,2,4,4),
+                type='l',
+                xlab='temperatura',
+                ylab='presión',
+                main='')
+                # add = TRUE)
+points(forbes)
+
+
+
+# Ejemplo de regresión lineal
+plot(forbes) # Imprimimos el data frame de dos columnas
+mod <- lm(pres ~ bp)
+abline(mod, col = 'red') # pintamos la recta de regresión
