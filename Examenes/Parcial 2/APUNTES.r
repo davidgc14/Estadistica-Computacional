@@ -309,3 +309,44 @@ pairwise.t.test(coag,diet) # a menor valor, más diferencia
 TukeyHSD(aov(coag~diet)) # útlima columna es el dato anterior mejorado (p-valor)
 
 
+
+###############################################
+############ REG. LIN. MÚLTIPLE ###############
+###############################################
+
+# el archivo hatco pretende explicar la fidelidad mediante 8 valores subjetivos 
+fit <- lm(fidelidad~velocidad+
+                    precio+
+                    flexprec+
+                    imgfabri+
+                    servconj+
+                    imgfvent+
+                    calidadp, hatco)
+# devuelve los coeficientes de la regresión. A mayor valor, mayor importancia en el resultado
+
+# Calculo del contrsaste de regresión y coeficientes de determinación
+summary(fit) # p-valor alto significa que la variable en cuestión no aporta
+
+# descomposición de la variabilidad utilzada en el contraste
+anova(fit) # SUM SQ indica la variabilidad no explicada 
+
+
+
+###############################################
+########### DIAGNÓSTICOS. MÚLTIPLE ############
+###############################################
+
+# residuos estandarizados
+rs <- rstandard(fit)
+
+# Gráfico de residuos
+plot(fit$fitted.values, rstandard(fit))
+abline(h = 0, col = 'red')
+
+# Test de Durbin-Watson (Para linealidad)
+library(lmtest)
+dwtest(fit)
+
+# Test de Kolmogorov-Smirnov (Para normalidad)
+ks.test(rs, pnorm) # p-valor alto = normal
+qqnorm(rs) # comprobación gráfica de la conclusión
