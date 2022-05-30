@@ -1,0 +1,15 @@
+---
+title: "Examen"
+author: "David García Curbelo"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: TRUE
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE) # Esto se aplica a todo el documento
+```
+
+The mean of *speed* is `r mean(cars$speed)`.`Hola caracola`
