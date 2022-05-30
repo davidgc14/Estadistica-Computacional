@@ -13,3 +13,9 @@ knitr::opts_chunk$set(echo = TRUE) # Esto se aplica a todo el documento
 ```
 
 The mean of *speed* is `r mean(cars$speed)`.`Hola caracola`
+
+
+\[
+\bar x = \sum_{i=1}^n x_i
+\]
+También ecuaciones en una línea como: $\hat\beta_0=\bar y-\hat\beta_1\bar x$.
