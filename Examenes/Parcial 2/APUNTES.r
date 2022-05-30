@@ -391,3 +391,78 @@ vif(fit2) # factor de inflado de varianza
 # Eliminación de variables no explicativas
 step(fit2) # Forward
 step(fit2, direction = 'both') # ida y vuelta
+
+
+
+###############################################
+############ INFORMES ESTADISTICOS ############
+###############################################
+
+# Visionado de documento Rmd sin exportación: VScode arriba derecha
+library(rmarkdown)
+library(knitr)
+
+# Renderizado de documento Rmd para ver el HTML
+render('Ejemplo.Rmd') # También dando al botón Play
+
+# Obtención de archivo intermedio de renderizado
+render('Ejemplo.Rmd', clean = FALSE)
+
+# Abrir HTML en el buscador desde R
+browseURL(url = render('Ejemplo.Rmd'))
+
+# Exportación a PDF
+render('Ejemplo.Rmd', output_format = 'pdf_document') # Válido también con word_document
+
+# Escritura de trozos de código de R
+```{r} 
+    # Código R
+```
+
+# Estructuras de ayuda para la impresión de HTML
+```{r name, # Incluir nombre al chunk
+    echo = FALSE, # Mostrar resultados pero no el código
+    eval = FALSE, # No ejecutar el código
+    include = FALSE, # No se muestra ni codigo ni resultados, pero se ejecuta
+    warning = FALSE # No mostrar warnings de ejecuciones
+    }
+    # Código R
+```
+
+# Chunk inicial
+```{r setup, include = FALSE}
+    knitr::opts_chunk$set(echo = TRUE) # Esto se aplica a todo el documento
+```
+
+# Inclusión de datos calculados en texto
+La media es `r mean(cars$speed)` 
+
+# Cursiva de texto, negrtita...
+*Cursiva* 
+**Negrita**
+`Texto tipo fórmula`
+
+# Titulos
+    # Titulo 1
+    ## Titulo 2
+    ...
+    ###### Titulo 6
+
+# Expresiones matemáticas
+$x^2$ # Escritura en texto
+\[x^2\] # Escritura en párrafo
+
+# Convertir de Rmd a R
+purl('Ejemplo.Rmd', 'script_Ejemplo.r')
+        # Incluyendo comentarios
+        purl('A.Rmd', 'script_A.r', documentation = 2)
+
+# Convertir de R a HTML
+spin('script_Ejemplo.r')
+
+# Convertir de R a Rmd
+spin('script_Ejemplo.r', knit = FALSE)
+
+# Mostrar HTML en el navegador
+browseURL(url = spin('Ejemplo.r')) # knitr::spin si queremos especificar el paquete
+
