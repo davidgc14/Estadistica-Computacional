@@ -466,3 +466,52 @@ spin('script_Ejemplo.r', knit = FALSE)
 # Mostrar HTML en el navegador
 browseURL(url = spin('Ejemplo.r')) # knitr::spin si queremos especificar el paquete
 
+
+
+###############################################
+################# ALEATORIEDAD ################
+###############################################
+
+# Permutación
+sample(1:10, 10)
+
+# Muestra con remplazo
+sample(1:5, 10, replace = TRUE)
+
+# Dist. Bernoulli
+sample(c(0,1), 5, replace=TRUE, prob=c(0.5,0.5))
+
+# Valores aleatorios de una lista dada
+sample(cars$speed, 3)
+
+###############################################
+############# DIST. DE PROBABILIDAD ###########
+###############################################
+
+
+# Normal
+rnorm(10, mean = 0, sd = 1)
+
+# Uniforme
+runif(10, min = 0, max = 1)
+
+# Ejemplos con Poisson
+
+    ## r-Random:
+    rpois(10, lambda = 1)
+
+    ## D-Densidad:
+    dpois(x = 0:10, lambda = 3)
+
+    ## P-Percentil:
+    ppois(x = 0:10, lambda = 3)
+
+    ## Q-Cuantil:
+    qpois(0.5, lower.tail = TRUE)
+
+
+
+###############################################
+############# APROXIMACIÓN DE MEDIA ###########
+###############################################
+
