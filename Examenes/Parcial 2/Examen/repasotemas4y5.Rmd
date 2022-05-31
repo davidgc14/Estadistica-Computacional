@@ -1,0 +1,101 @@
+---
+title: "RepasoTemas4y5"
+author: "carla"
+date: "31/5/2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+**Ejercicio 1**
+Establecer la semilla del generador de números aleatorios escribiendo set.seed(1). A continuación generar 50 valores desde una distribución Chi-cuadrado con n = 30 grados
+de libertad y almacenarlos en un vector y. Después generar 50 valores desde una distribución Normal con media µ = 30 y desviación típica σ = 5 y almacenarlos en un vector x. A partir de estos vectores se pide resolver la siguientes tareas:
+
+*a)Calcular la media, la desviación típica y los tres cuartiles de y.*
+
+```{r }
+set.seed(1)
+n<-50
+nchi<-30
+y<-rchisq(n,nchi)
+x<-rnorm(n,mean=30,sd=5)
+
+mean(y)
+sd(y)
+quantile(x,c(0.25,0.5,0.75))
+```
+*b)Representar un histograma de los datos almacenados en y.*
+```{r }
+ hist(y,probability=TRUE,ylim=c(0,0.1))
+```
+
+*c)Superponer al histograma anterior la curva de la densidad Normal con media y desviación típica la de los datos.*
+```{r }
+ hist(y,probability=TRUE,ylim=c(0,0.1))
+ curve(dnorm(x,mean(y),sd(y)),col='red',add=TRUE)
+```
+*d)Representar un gráfico de probabilidad de los valores de y.*
+```{r}
+qqnorm(y)
+```
+*d)Representar un gráco de cajas de los valores de y.*
+```{r}
+boxplot(y)
+
+```
+*e)Representar un gráfico de cajas múltiples (2 cajas) que permita comparar la distribución de x e y.*
+```{r}
+boxplot(x,y,names=c('Distribución de x','Distribución de y'))
+```
+*f)Representar un diagrama de dispersión de los valores de x (en el eje horizontal) frente a los de y (en el eje vertical).*
+```{r}
+plot(x,y)
+```
+*f)Ajustar un modelo de regresión lineal yi = β0 + β1xi + ϵi (i = 1, . . . , 50), con los datos almacenados en x e y. Representar el modelo ajustado (la recta de regresión) sobre el diagrama de dispersión anterior.*
+
+```{r}
+r<-lm(y~x)
+plot(x,y)
+abline(r,col='purple')
+```
+**EJERCICIO 2**
+
+*En 1651, el Caballero de Méré le planteó a Pascal una pregunta relacionada con las apuestas en
+juegos de azar: ¾sería adecuado apostar a que en cuatro lanzamientos de un dado se obtendrá al
+menos un seis? Este problema generó una fructífera correspondencia entre Pascal y Fermat que se
+contribuyó al nacimiento del Cálculo de Probabilidades. Se pide:*
+
+*a)Escribir una función que simule el lanzamiento de n dados. La función tendrá un único argumento, el número de lanzamientos n, y tomará el valor 4 por defecto. La función devolverá como posibles valores TRUE, si se obtiene al menos un 6 y FALSE en caso contrario.*
+
+```{r}
+n<-4
+lanzamiento<-function(n){
+  x<-sample(1:6,n,replace=TRUE,prob=rep(1/6,6))
+  return(6 %in% x)
+
+}
+lanzamiento(4)
+
+
+```
+*b)Utilizar la función anterior para simular nsim=10000 jugadas de este juego y calcular la proporción de veces que se gana la apuesta obtener al menos un 6 en n = 4 lanzamientos. Comparar el resultado con la probabilidad exacta que 
+es 1 − (5/6)^n.*
+```{r}
+ set.seed(1) 
+ nsim<-10000
+ x<-sample(1:6,nsim,replace=TRUE,prob=rep(1/6,6))
+ c<-0
+ for( i in 1:nsim){
+   if(lanzamiento()==TRUE) c=c+1
+ }
+ c
+ prob<-c/nsim
+ prob
+ 1-(5/6)^4
+
+
+```
+
+
+
+
