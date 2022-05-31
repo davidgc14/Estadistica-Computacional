@@ -53,6 +53,53 @@ típica la de los datos.
     curve(dnorm(x, mean = 30, sd = 5), add = TRUE, col = "red")
 ```
 
+
+### Ejercicio 1.4
+
+Representar un gráfico de probabilidad de los valores de $y$.
+```{r ejercicio1.4}
+    qqplot(y,x) # Esto creo que no está bien
+```
+
+
+### Ejercicio 1.5
+
+Representar un gráfico de cajas de los valores de $y$.
+```{r ejercicio1.5}
+    boxplot(y)
+```
+
+
+### Ejercicio 1.6
+
+Representar un gráfico de cajas múltiples (2 cajas) que permita comparar la distribución de $x$ e $y$.
+```{r ejercicio1.6}
+    boxplot(y, x, names = c("Chi²", "Normal"))
+```
+
+
+### Ejercicio 1.7
+
+Representar un diagrama de dispersión de los valores de $x$ (en el eje horizontal) frente a los de $y$ (en el eje vertical).
+```{r ejercicio1.7}
+    plot(x, y, xlab = "Normal", ylab = "Chi²")
+```
+
+
+### Ejercicio 1.8
+
+Ajustar un modelo de regresión lineal $y_i = \beta_0 + \beta_1 x_i + \varepsilon_i$ ($i = 1, . . . , 50$), con los datos 
+almacenados en $x$ e $y$. Representar el modelo ajustado (la recta de regresión) sobre el diagrama de dispersión anterior.
+```{r ejercicio1.8}
+    reg <- lm(y ~ x)
+    plot(x, y, xlab = "Normal", ylab = "Chi²")
+    abline(reg, xlab = "Normal", ylab = "Chi²")
+
+    reg
+```
+
+
+
 # Ejercicio 2
 
 En 1651, el Caballero de Méré le planteó a Pascal una pregunta relacionada con las apuestas en
