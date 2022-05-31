@@ -14,21 +14,44 @@ knitr::opts_chunk$set(echo = TRUE) # Esto se aplica a todo el documento
 
 # Ejercicio 1
 
+Establecer la semilla del generador de números aleatorios escribiendo `set.seed(1)`. A continuación
+generar 50 valores desde una distribución Chi-cuadrado con $n = 30$ grados de libertad y almacenarlos
+en un vector $y$. Después generar 50 valores desde una distribución Normal con media $\mu = 30$ y
+desviación típica $\sigma = 5$ y almacenarlos en un vector $x$. A partir de estos vectores se pide resolver la
+siguientes tareas:
+
+```{r previo}
+    set.seed(1)
+    y <- rchisq(30, n = 50)
+    x <- rnorm(50, mean = 30, sd = 5)
+```
+
 ### Ejercicio 1.1
 
+Calcular la media, la desviación típica y los tres cuartiles de $y$.
 ```{r ejercicio1.1}
-
-    
+    mean(y)
+    sd(y)
+    quantile(y, probs = c(0.25, 0.5, 0.75))
 ```
+
 
 ### Ejercicio 1.2
 
+Representar un histograma de los datos almacenados en $y$.
 ```{r ejercicio1.2}
-
-    
+    hist(y)
 ```
 
 
+### Ejercicio 1.3
+
+Superponer al histograma anterior la curva de la densidad Normal con media y desviación
+típica la de los datos.
+```{r ejercicio1.3}
+    hist(y, freq = FALSE, ylim = c(0, 0.08))
+    curve(dnorm(x, mean = 30, sd = 5), add = TRUE, col = "red")
+```
 
 # Ejercicio 2
 
@@ -62,11 +85,13 @@ el resultado con la probabilidad exacta que es $1 - (5/6)^n$.
         resultado[i] <- sim_dados()
     }
 
-    simulada <- sum(resultado) / nsim
+    simulada <- mean(resultado)
 ```
 
 ```{r resultado2.2}
+    # Valor exacto
     exacta
+    # Valor simulado
     simulada
 ```
 
@@ -98,6 +123,11 @@ efecto los valores generados provienen de dicha distribución.
     curve(Pareto(x, a, b), col = 'blue', add = TRUE)
 ```
 
+```{r test}
+    # Test de Kolmogorov-Smirnov
+    ks.test(x, Pareto(x, a, b))
+```
+
 
 
 # Ejercicio 4
@@ -124,9 +154,12 @@ valor exacto de la integral es $\pi/4$.
 
     sx <- sapply(x, f)
     mx <- mean(sx)
+```
 
-    mx
-
+```{r resultado4}
     # Valor exacto
     pi/4
+    # Valor simulado
+    mx
 ```
+
