@@ -58,7 +58,7 @@ típica la de los datos.
 
 Representar un gráfico de probabilidad de los valores de $y$.
 ```{r ejercicio1.4}
-    qqplot(y,x) # Esto creo que no está bien
+    qqnorm(y)
 ```
 
 
@@ -93,7 +93,7 @@ almacenados en $x$ e $y$. Representar el modelo ajustado (la recta de regresión
 ```{r ejercicio1.8}
     reg <- lm(y ~ x)
     plot(x, y, xlab = "Normal", ylab = "Chi²")
-    abline(reg, xlab = "Normal", ylab = "Chi²")
+    abline(reg)
 
     reg
 ```
