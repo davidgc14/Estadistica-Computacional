@@ -1,0 +1,64 @@
+---
+title: "Práctica 10"
+author: "Simulación"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: TRUE
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE) # Esto se aplica a todo el documento
+```
+
+# Ejercicio 1: Aproximación de una probabilidad
+
+Aproximar mediante simulación la probabilidad $P(X^2 + Y^2 <= 1)$. Compara con el valor exacto que vale $\pi/4$.   
+```{r ejercicio1}
+    nsim <- 1000
+
+    x <- runif(nsim, -1, 1)
+    y <- runif(nsim, -1, 1)
+
+    suceso <- (x^2 + y^2 <= 1)
+
+    # Aproximación experimental
+    mean(suceso)
+
+    # Valor exacto
+    4 - pi
+
+
+    estim<-cumsum(suceso)/(1:nsim)
+    # errores de estimación correspondientes
+    estim.err<-sqrt(cumsum((suceso-estim)^2))/(1:nsim)
+    plot(1:nsim,estim,type='l',ylab='Aproximación y límites de error', xlab='Número de simulaciones',main=expression(P(X^2+Y^2<=1)), ylim=c(0,1))
+    z<-qnorm(0.025,lower.tail = FALSE)
+    lines(estim - z*estim.err,col='blue',lwd=2,lty=3)
+    lines(estim + z*estim.err,col='blue',lwd=2,lty=3)
+    abline(h=4-pi, col='red', lty = 2) # Esto no entiendo
+```
+
+
+# Ejercicio 2: Aproximación de una integral
+
+Una vez visualizados los problemas, el objetivo es aproximar las dos integrales anteriores
+utilizando simulación. Para ello te sugiero que consideres 1000 simulaciones. Además
+de la aproximación obtenida calcula su error de estimación y construye un gráco que
+muestre la convergencia junto con los límites de error.
+
+```{r ejercicio2}
+    nsim <- 1000
+
+    # primera integral
+    f1<-function(x) dbeta(x,2.5,5)
+    
+    x <- rbeta(nsim,2.5,5) 
+    hx <- (0.2 <= x) & (x <= 0.4)
+    mean(hx)
+
+    curve(f1(x), 0.2, 0.4)
+    integrate(f1, lower = 0.2, upper = 0.4)
+    
+```
