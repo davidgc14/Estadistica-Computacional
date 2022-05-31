@@ -1,0 +1,132 @@
+---
+title: "Examen"
+author: "David García Curbelo"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: TRUE
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE) # Esto se aplica a todo el documento
+```
+
+# Ejercicio 1
+
+### Ejercicio 1.1
+
+```{r ejercicio1.1}
+
+    
+```
+
+### Ejercicio 1.2
+
+```{r ejercicio1.2}
+
+    
+```
+
+
+
+# Ejercicio 2
+
+En 1651, el Caballero de Méré le planteó a Pascal una pregunta relacionada con las apuestas en
+juegos de azar: ¾sería adecuado apostar a que en cuatro lanzamientos de un dado se obtendrá al
+menos un seis? Este problema generó una fructífera correspondencia entre Pascal y Fermat que se
+contribuyó al nacimiento del Cálculo de Probabilidades. Se pide:
+
+### Ejercicio 2.1
+
+Escribir una función que simule el lanzamiento de *n* dados. La función tendrá un único argumento, el número de lanzamientos n, y tomará el valor 4 por defecto. La función devolverá
+como posibles valores `TRUE`, si se obtiene al menos un 6 y `FALSE` en caso contrario
+```{r ejercicio2.1}
+    sim_dados <- function(n=4) {
+        n_dados <- sample(1:6, n, replace = FALSE)
+        return(6 %in% n_dados)
+    }
+```
+
+### Ejercicio 2.2
+
+Utilizar la función anterior para simular `nsim=10000` jugadas de este juego y calcular la proporción 
+de veces que se gana la apuesta "obtener al menos un 6 en `n = 4` lanzamientos". Comparar
+el resultado con la probabilidad exacta que es $1 - (5/6)^n$.
+```{r ejercicio2.2}
+    nsim <- 10000
+    exacta <- 1 - (5/6)^4
+    resultado <- numeric(nsim)
+    
+    for (i in 1:nsim) {
+        resultado[i] <- sim_dados()
+    }
+
+    simulada <- sum(resultado) / nsim
+```
+
+```{r resultado2.2}
+    exacta
+    simulada
+```
+
+
+
+# Ejercicio 3
+
+Utilizando el método de inversión se pide generar $n = 1000$ valores de un distribución Pareto de
+parámetros $a = 5$ y $b = 4$. Evaluar usando gráficos y el contraste de Kolmogorov-Smirknow que en
+efecto los valores generados provienen de dicha distribución.
+
+```{r ejercicio3}
+    a <- 5
+    b <- 4
+    n <- 1000
+    u <- runif(n)
+
+    Pareto <- function(x, a, b) {
+        x[x < b] <- b
+        return((a*b^a)/ (x^(a+1)))
+    }
+
+
+
+    x <- b / (1 - u)^(1/a)
+
+    hist(x, freq = FALSE, breaks = 'FD', main = 'Distribución Pareto')
+    lines(density(x), col = 'red')
+    curve(Pareto(x, a, b), col = 'blue', add = TRUE)
+```
+
+
+
+# Ejercicio 4
+
+Utilizando integración de Monte Carlo se pide aproximar la integral
+
+\[
+    \int_{0}^{1} \frac{1}{1+x^2} dx
+\]
+
+y calcular el error de la aproximación. Considerar para ello un número suficientemente grande de
+simulaciones, evaluando la convergencia mediante un gráfico. Como referencia tener en cuenta que el
+valor exacto de la integral es $\pi/4$.
+
+    
+```{r ejercicio4}
+    f <- function(x) {
+        return(1/(1+x^2))
+    }
+    curve(f(x), 0, 1)
+
+    nsim <- 100000
+    x <- runif(nsim) # por defecto en R está entre 0 y 1
+
+    sx <- sapply(x, f)
+    mx <- mean(sx)
+
+    mx
+
+    # Valor exacto
+    pi/4
+```
