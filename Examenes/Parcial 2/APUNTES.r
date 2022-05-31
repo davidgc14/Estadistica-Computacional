@@ -515,3 +515,106 @@ runif(10, min = 0, max = 1)
 ############# APROXIMACIÓN DE MEDIA ###########
 ###############################################
 
+# Simulación de lanzamiento de moneda
+x <- sample(c(0,1), 1000, replace = TRUE) # prob=c(0.4, 0.6) si está trucada
+mean(x) # simulación experimental de la media
+
+# Impresión de gráfica de aproximación
+n <- 1:1000
+plot(n, cumsum(x)/n, type = 'l', ylim = c(0,1))
+abline(h = 0.5, col = 'red', lty = 2)
+
+# Error estándar
+sd(x) / sqrt(nsim)
+
+# Error máximo admisible al nivel de confianza 0.95
+qnorm(0.95) * sd(x) / sqrt(nsim)
+
+# Gráfica de intervalo de confianza
+x <- rnorm(1000)
+estim <- cumsum(x)/n 
+estim.err <- sqrt(cumsum((x-estim)^2)) / n
+    # Grafica
+    plot(n, estim, type = 'l', ylim = c(-0.5,0.5))
+    abline(h = 0, col = 'red', lty = 2)
+        # Intervalos de confianza
+        z <- qnorm(0.95)
+        lines(estim-z*estim.err, lty=3, lwd=2, col='blue')
+        lines(estim+z*estim.err, lty=3, lwd=2, col='blue')
+
+# Cálculo de iteraciones para precisión prefijada
+determina.n <- function(epsilon, sigma, alpha) { # sigma = desviación típica
+    z <- qnorm(alpha/2, lower.tail = FALSE)
+    n <- (z*sigma/epsilon)^2
+    return(n)
+}
+
+
+
+###############################################
+############# INTEGRACIÓN DEFINIDA ############
+###############################################
+
+nsim <- 1000
+n <- 1:nsim
+
+# Se aproxima mediante distribución uniforme
+f <- function(x) (4*x^4)
+x <- runif(nsim, min = 0, max = 1) # Tomamos la distribución de los puntos
+fx <- sapply(x, f) # Los evaluamos en la función
+mean(fx) # Calculamos la media (APROXIMACIÓN)
+
+# Gráfico de convergencia
+estim <- cumsum(fx)/n 
+estim.err <- sqrt(cumsum((fx-estim)^2)) / n
+    # Grafica
+    plot(n, estim, type = 'l', ylim = c(-1/5,9/5))
+    abline(h = 4/5, col = 'red', lty = 2)
+        # Intervalos de confianza
+        z <- qnorm(0.975) # qnorm(0.25, lower.tail = FALSE)
+        lines(estim-z*estim.err, lty=3, lwd=2, col='blue')
+        lines(estim+z*estim.err, lty=3, lwd=2, col='blue')
+
+
+
+###############################################
+############ MÉTODO DE INVERSIÓN ##############
+###############################################
+
+# Devolver la inversa de la func. de distribución mediante una uniforme
+# Obtenemos la simulación de una variable aleatoria
+
+# Ejemplo con distribución exponencial
+Finv <- function(x, lambda) -log(1 - x)/lambda
+u <- runif(nsim)
+lambda <- 0.5
+x <- Finv(u, lambda) #Simulación de la variable aleatoria
+
+# Gráfico de simulación
+hist(x, freq = FALSE, breaks = 'FD')
+curve(f(x, lambda), col = 'red', add = TRUE)
+lines(density(x), col = 'blue')
+
+# Comprobación de hipotesis
+ks.test(x, pexp, rate = lambda) # pexp es la función de distribución (F)
+
+
+# Otro ejemplo. Doble exponencial
+g <- function(x, lambda) lambda*exp(-lambda*abs(x))/2
+G_inv <- function(x, lambda) {
+    ifelse (x<0.5, log(2*x)/lambda, -log(2*(1-x))/lambda)
+}
+
+u <- runif(nsim)
+x <- G_inv(u, lambda) #Simulación de la variable aleatoria
+
+# Gráfico de simulación
+hist(x, freq = FALSE, breaks = 'FD')
+lines(density(x), col = 'red')
+curve(g(x, lambda), col = 'blue', add = TRUE)
+
+    # test de Kolmogorov-Smirnov
+    G <- function(x, lambda) { 
+        ifelse (x<0, exp(lambda*x)/2, 1-exp(-lambda*x)/2)
+    }
+    ks.test(x, F, lambda = lambda) # se aplica a la función de distribución
