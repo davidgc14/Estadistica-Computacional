@@ -206,9 +206,51 @@ entre:
         b / ((1 - x)^(1/a))
     }
 ```
-
-
+Desarrollo del ejercicio:
 ```{r ej3}
     n <- 1000
+    u <- runif(n)
     
+    sim <- F_1(u) # Variables aleatorias
+
+    # Gráfico de simulación
+    hist(sim, freq = FALSE, breaks = 'FD')
+    curve(f(x), col = 'red', add = TRUE)
+    lines(density(sim), col = 'blue')
+
+    # Comprobación de hipotesis
+    ks.test(sim, F) 
+```
+
+
+## Ejercicio 4
+```{r ej4.0}
+    g <- function(x) (1 / (1+x^2))
+    l_inf <- 0
+    l_sup <- 1
+
+    nsim <- 1000
+    u <- runif(nsim, l_inf, l_sup)
+    gx <- sapply(u, g)
+
+    # Aproximación
+    mean(gx)
+
+    # Valor real
+    pi/4
+```
+
+```{r ej4.1}
+    n <- 1:nsim
+    # Graficación de la aproximación
+    estim <- cumsum(gx)/n 
+    estim.err <- sqrt(cumsum((gx-estim)^2)) / n
+    # Grafica
+    plot(n, estim, type = 'l', ylim = c(0.5, 1))
+    abline(h = pi/4, col = 'red', lty = 2)
+        # Intervalos de confianza
+        z <- qnorm(0.975) # qnorm(0.25, lower.tail = FALSE)
+        lines(estim-z*estim.err, lty=3, lwd=2, col='blue')
+        lines(estim+z*estim.err, lty=3, lwd=2, col='blue')
+
 ```
