@@ -179,7 +179,7 @@ boxplot(rnorm(1000), horizontal = TRUE, axes = FALSE)
 # Comparativa entre dos variables continuas
 boxplot(rnorm(1000), rnorm(1000, mean = 3, sd = 5))
 
-# Comparativa entre elementos de factores en una variable
+# Comparativa entre elementos de factores en una variable (o de un data frame)
 boxplot(salary~gender) # Factores: género. Conjunto de datos: Salary
 
 # Distinción con dos factores
