@@ -1,0 +1,214 @@
+---
+title: "Preparación Examen"
+author: "David García Curbelo"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: TRUE
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(datasets)
+attach(airquality)
+```
+
+# Ejercicio propuesto Práctica 7
+
+El data frame `airquality` del paquete *datasets* contiene datos relativos a la calidad del
+aire en Nueva York. A partir de dichos datos escribe el código que permita resolver las
+siguientes tareas:
+
+## Ejercicio 1
+
+Construir un histograma del contaminante `Ozone` considerando intervalos de amplitud 10.
+```{r ej1}
+    # Construcción del vector de divisiones
+    max <- max(Ozone, na.rm = TRUE)
+    min <- min(Ozone, na.rm = TRUE)
+    v <- c(seq(min, max, by = 10), max) # Añadimos la última componente de la secuencia
+
+    # Impresión del histograma
+    hist(Ozone, breaks = v)
+```
+
+
+## Ejercicio 2
+
+Superponer al histograma anterior la función de densidad de una distribución Normal
+ cuyos parámetros media y desviación típica sean las de los datos Ozone. ¿Te
+parece que estos datos se podrían modelizar mediante ese modelo de probabilidad?
+
+```{r ej2}
+    hist(Ozone, breaks = v)
+
+    # Construcción de la función de densidad
+    mean <- mean(Ozone, na.rm = TRUE)
+    sd <- sd(Ozone, na.rm = TRUE)
+    curve(dnorm(x, mean, sd), col = "red", add = TRUE)
+```
+
+
+## Ejercicio 3
+
+Construir un gráfico de normalidad para la variable `Ozone`. ¿Qué te indica el gráfico?
+Confirmar el resultado con un contraste de hipótesis.
+```{r ej2-test, warning=FALSE}
+    # Aplicamos test para ver si se puede modelizar por la normal
+    qqnorm(Ozone)
+
+    # Parece que los datos están medianamente alineados. Lo confirmamos con los test
+    shapiro.test(Ozone)
+    ks.test(Ozone, pnorm, mean, sd)
+```
+
+
+## Ejercicio 4
+
+Construir un diagrama de cajas del contaminante `Ozone`. ¿Qué puedes interpretar
+del gráfico?
+
+```{r ej4}
+    boxplot(Ozone)
+```
+
+
+## Ejercicio 5
+
+Construir un diagrama de cajas múltiple del contaminante Ozone que permita comparar 
+sus valores en los meses de mayo, junio, julio, agosto y septiembre. ¿Qué
+puedes interpretar del gráfico?
+  
+```{r ej5}
+    df <- data.frame(Ozone, Month = as.factor(Month))
+    boxplot(df$Ozone~df$Month)
+```
+
+
+## Ejercicio 6
+
+Construir dos diagramas de dispersión que nos permita visualizar la posible relación
+entre: 
+
+1. la velocidad del viento, `Wind`, y el contaminante `Ozone`.
+2. la temperatura, `Temp`, y `Ozone`. 
+
+¿Qué puedes interpretar de los gráficos?
+
+```{r ej6}
+    # Grafico 1
+    plot(Wind, Ozone)
+
+    # Grafico 2
+    plot(Temp, Ozone)
+```
+
+
+
+# Propuesta de ejercicios de Examen
+
+## Ejercicio 1
+
+```{r ej1.0}
+    set.seed(1)
+    n <- 30
+    mu <- 30
+    sigma <- 5
+
+    x <- rnorm(50, mu, sigma)
+    y <- rchisq(50, n)
+```
+
+### 1.1
+```{r ej1.1}
+    media <- mean(y); mean
+    sd <- sd(y); sd
+    q <- quantile(y, probs = c(0.25, 0.5, 0.75)); q
+```
+
+### 1.2
+```{r ej1.2}
+    hist(y)
+```
+
+### 1.3
+```{r ej1.3}
+    hist(y, freq = FALSE, ylim = c(0,0.08))
+    curve(dnorm(x, mu, sigma), col = 'red', add = TRUE)
+```
+
+### 1.4
+```{r ej1.4}
+    boxplot(y)
+```
+
+### 1.5
+```{r ej1.5}
+    boxplot(x,y)
+```
+
+### 1.6
+```{r ej1.6}
+    plot(x,y)
+```
+
+### 1.7
+```{r ej1.7}
+    reg <- lm(x~y)
+    
+    plot(x,y)
+    abline(reg, col = 'red')
+```
+
+
+## Ejercicio 2
+
+### 2.1
+```{r ej2.1_function}
+    simulation <- function(n = 4) {
+        tirada <- sample(1:6, n, replace = TRUE)
+        return(6 %in% tirada)
+    }
+```
+
+### 2.2
+```{r ej2.2}
+    nsim <- 10000
+    sim <- sapply(rep(4, nsim), simulation)
+    
+    # Aproximación
+    mean(sim)
+    # Valor real
+    1 - (5/6)^4
+
+    ## Otra forma de hacerlo
+    
+    # experimento <- numeric(nsim)
+    #for (i in 1:nsim) {
+    #    experimento[i] <- simulation(4)
+    #}
+```
+
+
+## Ejercicio 3
+
+```{r ej3.0}
+    f <- function(x, a=5, b=4) {
+        ifelse (x<b, a/b, (a * (b^a))/(x^(a+1)))
+    }
+
+    F <- function(x, a=5, b=4) {
+        ifelse(x<b, 0, 1 - (b/x)^a)
+    }
+
+    F_1 <- function(x, a=5, b=4) {
+        b / ((1 - x)^(1/a))
+    }
+```
+
+
+```{r ej3}
+    n <- 1000
+    
+```
