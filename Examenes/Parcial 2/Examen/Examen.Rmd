@@ -14,7 +14,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Ejercicio 1
 
-```{r ejercicio1}
+#### Ejercicio 1.1
+```{r ejercicio1.1}
+
+```
+
+#### Ejercicio 1.2
+```{r ejercicio1.2}
+
+```
+
+#### Ejercicio 1.3
+```{r ejercicio1.3}
 
 ```
 
@@ -22,7 +33,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Ejercicio 2
 
-```{r ejercicio2}
+#### Ejercicio 2.1
+```{r ejercicio2.1}
+
+```
+
+#### Ejercicio 2.2
+```{r ejercicio2.2}
 
 ```
 
