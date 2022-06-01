@@ -172,7 +172,7 @@ efecto los valores generados provienen de dicha distribución.
 
 ```{r test}
     # Test de Kolmogorov-Smirnov
-    ks.test(x, Pareto(x, a, b))
+    ks.test(x, Pareto(x, a, b)) # Esto está mal. Pendiente de corregir. Hay que poner la función de distribución, no la de densidad
 ```
 
 
