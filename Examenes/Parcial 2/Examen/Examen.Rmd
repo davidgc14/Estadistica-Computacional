@@ -1,0 +1,35 @@
+---
+title: "Examen segundo parcial"
+author: "David García Curbelo"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: TRUE
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Ejercicio 1
+
+```{r ejercicio1}
+
+```
+
+
+
+## Ejercicio 2
+
+```{r ejercicio2}
+
+```
+
+
+
+## Ejercicio 3
+
+```{r ejercicio3}
+
+```
