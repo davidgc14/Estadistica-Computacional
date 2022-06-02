@@ -14,39 +14,81 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Ejercicio 1
 
-#### Ejercicio 1.1
+El ejercicio se desarrolla mediante el data frame `airquality` del paquete *datasets*. Importamos por tanto
+el data frame al espacio de trabajo para mayor facilidad en su manejo.
+```{r inicio}
+    library(datasets)
+    attach(airquality)
+```
+
+### Ejercicio 1.1
+Construcción del diagrama de cajas que compare la radiación solar en los diferentes meses del año.
 ```{r ejercicio1.1}
-
+    df <- data.frame(Solar.R, Month = as.factor(Month)) 
+    levels(df$Month) <- c("Mayo", "Junio", "Julio", "Agosto", "Septiembre")
+    boxplot(df$Solar.R~df$Month, xlab = "Meses (mayo - septiembre)", ylab = "Radiación Solar")
 ```
 
-#### Ejercicio 1.2
+### Ejercicio 1.2
+Construcción de un diagrama de dispersión que compare la radiación solar (horizontal) con el Ozono (vertical).
 ```{r ejercicio1.2}
-
+    plot(Solar.R, Ozone, xlab = "Radiación Solar", ylab = "Emisiones de Ozono")
 ```
 
-#### Ejercicio 1.3
+### Ejercicio 1.3
+Ajustar los datos y superponer al gráfico anterior la recta de regresión lineal.
 ```{r ejercicio1.3}
+    plot(Solar.R, Ozone, xlab = "Radiación Solar", ylab = "Emisiones de Ozono")
 
+    # Regresión lineal
+    reg <- lm(Ozone~Solar.R)
+    abline(reg, col = "red", lty = 2)
+
+    legend('topleft', c("Recta de regresión"), col = "red", lty = 2)
 ```
 
 
 
 ## Ejercicio 2
+Ejercicio sobre al distribución Pareto. Almacenamos cada una de las fórmulas:
+```{r 2.funciones}
+    # Distribución de Pareto
+    f <- function(x, a=5, b=4) {
+        ifelse (x < b, 1, (a*b^a)/(x^(a+1)))
+    }
+    # Densidad de Pareto
+    F <- function(x, a=5, b=4) {
+        ifelse (x < b, 0, 1 - (b / x)^a)
+    }
+    # Inversa de la Densidad de Pareto
+    Finv <- function(x, a=5, b=4) {
+        ifelse (x < 1, b / (1 - x)^(1/a), 0)
+    }
+```
 
-#### Ejercicio 2.1
+### Ejercicio 2.1
+Utilizar método de inversión para generar 1000 valores de la distribución de Pareto de parámetros $a = 5$ y $b = 4$.
 ```{r ejercicio2.1}
+    # Valores necesarios para el ejercicio
+    a <- 5
+    b <- 4
+    nsim <- 1000
 
+    # Simulación de V.A.
+    u <- runif(nsim)
+    sim <- Finv(u, a, b); head(sim)
 ```
 
-#### Ejercicio 2.2
+### Ejercicio 2.2
+Evaluar usando gráficos y el contraste de Kolmogorov-Smirnov.
 ```{r ejercicio2.2}
+    # Evaluación gráfica
+    hist(sim, freq = FALSE, breaks = 'FD', main = "Distribución de Pareto", xlab = "Simulaciones", ylab = "Densidad")
+    curve(f(x, a, b), col = 'red', add = TRUE)
+    lines(density(sim), col = 'blue')
 
+    # Comprobación de hipotesis
+    ks.test(sim, F) 
 ```
-
-
-
-## Ejercicio 3
-
-```{r ejercicio3}
-
-```
+Podemos observar un p-valor superior a 0.05, lo que significa que en efecto los valores generados 
+provienen de la distribución que buscábamos.
