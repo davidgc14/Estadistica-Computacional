@@ -21,7 +21,7 @@ require(distrEx)
 
 ## Poisson
 
-#### Parameter
+### Parameter
 ```{r Parameter}
    ## Class: PoissonParameter
     setClass("PoissonParameter",
@@ -32,7 +32,7 @@ require(distrEx)
             contains = "Parameter") 
 ```
 
-#### Distribution
+### Distribution
 ```{r Distribution}
 ## Class: poisson distribution
 setClass("Poisson",
@@ -62,7 +62,7 @@ setClass("Poisson",
 )
 ```
 
-#### Métodos de acceso
+### Métodos de acceso
 ```{r access}
 ## Access Methods
 setMethod("lambda", "PoissonParameter", function(object) object@lambda)
@@ -72,46 +72,34 @@ setReplaceMethod("lambda", "PoissonParameter",
                     function(object, value){ object@lambda <- value; object})
 ```
 
-#### Funciones genéricas
+### Funciones genéricas
 ```{r generic}
-if(!isGeneric("size"))
-    setGeneric("size", function(object) standardGeneric("size"))
-if(!isGeneric("prob"))
-    setGeneric("prob", function(object) standardGeneric("prob"))
+if(!isGeneric("lambda"))
+    setGeneric("lambda", function(object) standardGeneric("lambda"))
 
-setValidity("BinomParameter", function(object){
-    if(length(prob(object)) != 1)
-        stop("prob has to be a numeric of length 1")
-    if(prob(object) < 0)
-        stop("prob has to be in [0,1]")
-    if(prob(object) > 1)
-        stop("prob has to be in [0,1]")
-    if(length(size(object)) != 1)
-        stop("size has to be a numeric of length 1")
-    if(size(object) < 1)
-        stop("size has to be a natural greater than 0")
-    if(!identical(floor(size(object)), size(object)))
-        stop("size has to be a natural greater than 0")
+setValidity("PoissonParameter", function(object){
+    if(length(lambda(object)) != 1)
+        stop("lambda has to be a numeric of length 1")
+    if(lambda(object) < 0)
+        stop("lambda has to be a non-negative value")
     else return(TRUE)
 })
 ```
 
-#### Funciones de distribución
+### Funciones de distribución
 ```{r fun}
-    Binom <- function(size = 1,prob = 0.5) new("Binom", size = size, prob = prob)
+    Poisson <- function(lambda = 1) new("Poisson", lambda = lambda)
 ```
 
-#### Convulsionales
+### Convulsionales
 ```{r conv}
-## Convolution for two binomial distributions Bin(n1,p1) and Bin(n2,p2)
+## Convolution for two poisson distributions Pois(n1,lamb1) and Pois(n2,lamb2)
 ## Distinguish cases
-## p1 == p2 und p1 != p2
-setMethod("+", c("Binom","Binom"),
-            function(e1,e2){
-                newsize <- size(e1) + size(e2)
-                
-                if(isTRUE(all.equal(prob(e1),prob(e2))))
-                    return(new("Binom", prob = prob(e1), size = newsize, .withArith = TRUE))
+## lamb1 == lamb2 und lamb1 != lamb2
+setMethod("+", c("Poisson","Poisson"),
+            function(e1,e2){                
+                if(isTRUE(all.equal(lambda(e1),lambda(e2))))
+                    return(new("Poisson", lambda = lambda(e1), .withArith = TRUE))
                 
                 return(as(e1, "LatticeDistribution") + e2)
 })
