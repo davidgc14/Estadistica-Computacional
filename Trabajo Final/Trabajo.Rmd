@@ -1,0 +1,120 @@
+---
+title: "Trabajo parte propia"
+author: "David García Curbelo"
+date: "`r Sys.Date()`"
+output: 
+    html_document:
+        toc: TRUE
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Scratch
+Veamos otro ejemplo (con sus respectivos pasos) de implementación de la distribución 
+de Poisson mediante los paquetes `distr` y `distrEx`:
+```{r, include = FALSE}
+require(distr)
+require(distrEx)
+```
+
+## Poisson
+
+#### Parameter
+```{r Parameter}
+   ## Class: PoissonParameter
+    setClass("PoissonParameter",
+            representation = representation(lambda = "numeric"),
+            prototype = prototype(lambda = 1, 
+                                    name = gettext("Parameter of a Poisson distribution")
+                        ),
+            contains = "Parameter") 
+```
+
+#### Distribution
+```{r Distribution}
+## Class: poisson distribution
+setClass("Poisson",
+            prototype = prototype(
+                        r = function(n){ rpois(n, lambda = 1) },
+                        d = function(x, log = FALSE){
+                                dpois(x, lambda = 1, log = log)
+                        },
+                        p = function(q, lower.tail = TRUE, log.p = FALSE ){
+                                ppois(q, lambda = 1,
+                                        lower.tail = lower.tail, log.p = log.p)
+                        },
+                        q = function(p, lower.tail = TRUE, log.p = FALSE ){
+                                qpois(p, lambda = 1,
+                                        lower.tail = lower.tail, log.p = log.p)
+                        },
+                        img = new("Naturals"),
+                        param = new("PoissonParameter"),
+                        support = 0:1,
+                        lattice = new("Lattice", pivot = 0, width = 1, Length = 2, 
+                                name = gettext("lattice of a Poisson distribution")
+                        ),
+                        .logExact = TRUE,
+                        .lowerExact = TRUE
+            ),
+            contains = "LatticeDistribution"
+)
+```
+
+#### Métodos de acceso
+```{r access}
+## Access Methods
+setMethod("size", "BinomParameter", function(object) object@size)
+setMethod("prob", "BinomParameter", function(object) object@prob)
+## Replace Methods
+setReplaceMethod("size", "BinomParameter",
+                    function(object, value){ object@size <- value; object})
+setReplaceMethod("prob", "BinomParameter",
+                    function(object, value){ object@prob <- value; object})
+```
+
+#### Funciones genéricas
+```{r generic}
+if(!isGeneric("size"))
+    setGeneric("size", function(object) standardGeneric("size"))
+if(!isGeneric("prob"))
+    setGeneric("prob", function(object) standardGeneric("prob"))
+
+setValidity("BinomParameter", function(object){
+    if(length(prob(object)) != 1)
+        stop("prob has to be a numeric of length 1")
+    if(prob(object) < 0)
+        stop("prob has to be in [0,1]")
+    if(prob(object) > 1)
+        stop("prob has to be in [0,1]")
+    if(length(size(object)) != 1)
+        stop("size has to be a numeric of length 1")
+    if(size(object) < 1)
+        stop("size has to be a natural greater than 0")
+    if(!identical(floor(size(object)), size(object)))
+        stop("size has to be a natural greater than 0")
+    else return(TRUE)
+})
+```
+
+#### Funciones de distribución
+```{r fun}
+    Binom <- function(size = 1,prob = 0.5) new("Binom", size = size, prob = prob)
+```
+
+#### Convulsionales
+```{r conv}
+## Convolution for two binomial distributions Bin(n1,p1) and Bin(n2,p2)
+## Distinguish cases
+## p1 == p2 und p1 != p2
+setMethod("+", c("Binom","Binom"),
+            function(e1,e2){
+                newsize <- size(e1) + size(e2)
+                
+                if(isTRUE(all.equal(prob(e1),prob(e2))))
+                    return(new("Binom", prob = prob(e1), size = newsize, .withArith = TRUE))
+                
+                return(as(e1, "LatticeDistribution") + e2)
+})
+```
