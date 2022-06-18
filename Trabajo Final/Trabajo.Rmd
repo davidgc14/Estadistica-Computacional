@@ -21,9 +21,9 @@ require(distrEx)
 
 ## Poisson
 
-### Parameter
+### Parámetros
 ```{r Parameter}
-   ## Class: PoissonParameter
+   ## Clase: PoissonParameter
     setClass("PoissonParameter",
             representation = representation(lambda = "numeric"),
             prototype = prototype(lambda = 1, 
@@ -32,9 +32,9 @@ require(distrEx)
             contains = "Parameter") 
 ```
 
-### Distribution
+### Distribución
 ```{r Distribution}
-## Class: poisson distribution
+## Clase: Distribución de poisson
 setClass("Poisson",
             prototype = prototype(
                         r = function(n){ rpois(n, lambda = 1) },
@@ -64,10 +64,10 @@ setClass("Poisson",
 
 ### Métodos de acceso
 ```{r access}
-## Access Methods
+## Método de acceso
 setMethod("lambda", "PoissonParameter", function(object) object@lambda)
 
-## Replace Methods
+## Método de reemplazamiento
 setReplaceMethod("lambda", "PoissonParameter",
                     function(object, value){ object@lambda <- value; object})
 ```
@@ -93,9 +93,9 @@ setValidity("PoissonParameter", function(object){
 
 ### Convulsionales
 ```{r conv}
-## Convolution for two poisson distributions Pois(n1,lamb1) and Pois(n2,lamb2)
-## Distinguish cases
-## lamb1 == lamb2 und lamb1 != lamb2
+## Convolución para dos distribuciones de poisson Pois(n1,lamb1) y Pois(n2,lamb2)
+## Distinguimos casos
+## lamb1 == lamb2 y lamb1 != lamb2
 setMethod("+", c("Poisson","Poisson"),
             function(e1,e2){                
                 if(isTRUE(all.equal(lambda(e1),lambda(e2))))
