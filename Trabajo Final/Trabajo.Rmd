@@ -104,3 +104,82 @@ setMethod("+", c("Poisson","Poisson"),
                 return(as(e1, "LatticeDistribution") + e2)
 })
 ```
+
+### Expresiones analíticas
+
+Para ello usaremos el paquete `distrEx`:
+
+#### Expectación
+```{r expectation}
+
+setMethod("E", signature(object = "Poisson", fun = "missing", cond = "missing"),
+    function(object, low = NULL, upp = NULL, ...){
+        if(!is.null(low)) if(low <= min(support(object))) low <- NULL
+        if(!is.null(upp)) if(upp >= max(support(object))) upp <- NULL
+        if(is.null(low) && is.null(upp))
+            return(lambda(object))
+        else{
+            if(is.null(low)) low <- -Inf
+            if(is.null(upp)) upp <- Inf
+            if(low == -Inf){
+                if(upp == Inf) return(lambda(object))
+                else return(m1df(object, upper = upp, ...)) 
+            } else {
+                E1 <- m1df(object, upper = low, ...)
+                E2 <- if(upp == Inf)
+                            lambda(object) else m1df(object, upper = upp, ...)
+                return(E2-E1)
+            }
+        }
+    }
+)
+```
+
+#### Funcionales
+```{r funtionals}
+setMethod("var", signature(x = "Poisson"),
+    function(x,...){
+        dots <- match.call(call = sys.call(sys.parent(1)), expand.dots = FALSE)$"..."
+        fun <- NULL; cond <- NULL; low <- NULL; upp <- NULL
+        
+        if(hasArg(low)) low <- dots$low
+        if(hasArg(upp)) upp <- dots$upp
+        if(hasArg(fun)||hasArg(cond)||!is.null(low)||!is.null(upp))
+            return(var(as(x,"DiscreteDistribution"),...))
+        else
+            return(lambda(x))
+    }
+)
+```
+
+#### Asimetría
+```{r skewness}
+setMethod("skewness", signature(x = "Poisson"),
+    function(x, ...){
+        dots <- match.call(call = sys.call(sys.parent(1)), expand.dots = FALSE)$"..."
+        fun <- NULL; cond <- NULL; low <- NULL; upp <- NULL
+        if(hasArg(low)) low <- dots$low
+        if(hasArg(upp)) upp <- dots$upp
+        if(hasArg(fun)||hasArg(cond) || !is.null(low)||!is.null(upp))
+            return(skewness(as(x,"DiscreteDistribution"),...))
+        else
+            return(1/sqrt(lambda(x)))
+    }
+)
+```
+
+#### Curtosis
+```{r kurtosis}
+setMethod("kurtosis", signature(x = "Poisson"),
+    function(x, ...){
+        dots <- match.call(call = sys.call(sys.parent(1)), expand.dots = FALSE)$"..."
+        fun <- NULL; cond <- NULL; low <- NULL; upp <- NULL
+        if(hasArg(low)) low <- dots$low
+        if(hasArg(upp)) upp <- dots$upp
+        if(hasArg(fun)||hasArg(cond)||!is.null(low) || !is.null(upp))
+            return(kurtosis(as(x,"DiscreteDistribution"),...))
+        else
+            p <- prob(x)
+            return(3 + (1/lambda(x)))
+    }
+)
