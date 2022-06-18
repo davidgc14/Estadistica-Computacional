@@ -65,13 +65,11 @@ setClass("Poisson",
 #### Métodos de acceso
 ```{r access}
 ## Access Methods
-setMethod("size", "BinomParameter", function(object) object@size)
-setMethod("prob", "BinomParameter", function(object) object@prob)
+setMethod("lambda", "PoissonParameter", function(object) object@lambda)
+
 ## Replace Methods
-setReplaceMethod("size", "BinomParameter",
-                    function(object, value){ object@size <- value; object})
-setReplaceMethod("prob", "BinomParameter",
-                    function(object, value){ object@prob <- value; object})
+setReplaceMethod("lambda", "PoissonParameter",
+                    function(object, value){ object@lambda <- value; object})
 ```
 
 #### Funciones genéricas
